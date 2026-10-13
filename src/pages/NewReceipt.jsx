@@ -66,7 +66,6 @@ export default function NewReceipt() {
     window.__xquoteNewProps = {
       showSave: true,
       onSave: doSave,
-      onPrint: () => window.print(),
       onExport: () => {
         const which = prompt('Export as: pdf / thermal / excel / csv / png', 'pdf');
         if (!which) return;
@@ -77,7 +76,6 @@ export default function NewReceipt() {
         if (k === 'csv')     exportCSV(draft);
         if (k === 'png')     exportPNG(previewRef.current, receiptNo);
       },
-      onNewReceipt: () => { if (confirm('Discard current draft and start a new receipt?')) nav('/new'); },
     };
     return () => { delete window.__xquoteNewProps; };
   });

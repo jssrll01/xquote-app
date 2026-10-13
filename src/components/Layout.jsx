@@ -2,15 +2,14 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, PlusCircle, LogOut,
-  Printer, Download, Save,
+  Download, Save,
 } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext.jsx';
 
 export default function Layout({
   children,
-  onPrint, onExport, onSave, onNewReceipt,
-  showSave = false,   // only true on /new
-  onMenuAction,       // optional override for new-receipt
+  onExport, onSave,
+  showSave = false,
 }) {
   const { signOut } = useAuth();
   const navigate = useNavigate();
@@ -26,12 +25,7 @@ export default function Layout({
     navigate('/login');
   };
 
-  const goNew = () => {
-    if (onNewReceipt) onNewReceipt();
-    else navigate('/new');
-  };
-
-  const Btn = ({ icon: Icon, label, onClick, color = '#6366F1' }) => (
+  const Btn = ({ icon: Icon, label, onClick, color = '#7A8499' }) => (
     <button onClick={onClick} className="neu-btn" title={label}
       style={{ padding: 10, borderRadius: 10 }}>
       <Icon size={16} style={{ color }} />
@@ -58,13 +52,11 @@ export default function Layout({
           </div>
         </div>
 
-        {/* action icons */}
+        {/* action icons — only Save (on new), Export, Logout */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-          <Btn icon={PlusCircle} label="New receipt" onClick={goNew} color="#10B981" />
           {showSave && (
             <Btn icon={Save} label="Save" onClick={onSave} color="#8B5CF6" />
           )}
-          <Btn icon={Printer}  label="Print"  onClick={onPrint}  color="#7A8499" />
           <Btn icon={Download} label="Export" onClick={onExport} color="#7A8499" />
           <button onClick={handleSignOut} className="neu-btn" title="Logout"
             style={{ padding: 10, borderRadius: 10 }}>
